@@ -62,7 +62,8 @@ include 'koneksi.php';
     </div>
 
     <?php
-    include 'components/footer.php'
+    include 'components/footer.php';
+    include 'components/modal.php'
     ?>
 
     <script>

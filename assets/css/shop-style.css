@@ -327,6 +327,232 @@ footer {
 .category{
     font-size: 26px;
 }
+/* MODAL STYLES */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+    padding-top: 60px; /* Location of the box */
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background-color: #ffffff;
+    margin: 5% auto; /* 5% from the top and centered */
+    padding: 30px;
+    border: 1px solid #ddd;
+    width: 75%; /* Could be more or less, depending on screen size */
+    max-width: 900px; /* Maximum width */
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { top: -100px; opacity: 0; }
+    to { top: 0; opacity: 1; } /* Adjust if padding-top of .modal changes */
+}
+
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 32px;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-body {
+    display: flex;
+    gap: 30px; /* Space between image and form */
+    margin-top: 20px; /* Space below the close button */
+}
+
+.modal-image-container {
+    flex: 1; /* Takes up 1 part of the space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9; /* Light background for the image */
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid #eee;
+    max-height: 500px; /* Control max height of image area */
+}
+
+.modal-image-container img {
+    max-width: 100%;
+    max-height: 460px; /* Ensure image fits within padding */
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.modal-form-container {
+    flex: 1.2; /* Takes up 1.2 parts of the space, making it slightly wider */
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-form-container h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.modal-category-tag {
+    background-color: #e0e0ff; /* Light blue accent */
+    color: #555;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 13px;
+    font-weight: 500;
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+.modal-price {
+    font-size: 22px;
+    font-weight: 600;
+    color: #1b1b1b;
+    margin-bottom: 15px;
+}
+
+#modalProductDescription {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 20px;
+    max-height: 150px; /* Example max height */
+    overflow-y: auto; /* Scroll for longer descriptions */
+    padding-right: 10px; /* For scrollbar */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+.form-control:focus {
+    border-color: #84a1ff;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(132, 161, 255, 0.25);
+}
+
+input[type="number"].form-control {
+    width: 80px; /* Smaller width for quantity */
+}
+
+.submit-button {
+    background-color: #1b1b1b;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.submit-button:hover {
+    background-color: #333333;
+}
+
+/* Responsive adjustments for the modal */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+        margin-top: 10%;
+    }
+
+    .modal-body {
+        flex-direction: column; /* Stack image and form on smaller screens */
+        gap: 20px;
+    }
+
+    .modal-image-container {
+        max-height: 300px; /* Adjust height for smaller screens */
+    }
+    .modal-image-container img {
+        max-height: 260px;
+    }
+
+    .modal-form-container h2 {
+        font-size: 24px;
+    }
+
+    .modal-price {
+        font-size: 20px;
+    }
+
+    #modalProductDescription {
+        max-height: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 15px;
+         margin-top: 15%;
+    }
+    .close-button {
+        font-size: 28px;
+        top: 5px; /* Adjust close button position */
+        right: 10px;
+    }
+     .modal-form-container h2 {
+        font-size: 20px;
+    }
+
+    .modal-price {
+        font-size: 18px;
+    }
+    .submit-button {
+        padding: 10px 20px;
+        font-size: 15px;
+    }
+}
+
+
 /* RESPONSIVE BREAKPOINTS */
 @media (max-width: 1200px) {
     .card-container {
