@@ -96,7 +96,14 @@ foreach ($orders as $order) {
     <link rel="stylesheet" href="assets/css/style-dashboard.css">
 </head>
 <body>
-    <?php include 'components/header.php'; ?>
+    <?php
+    if (isset($_SESSION['user_id'])) {
+        // dd($_SESSION);
+        include 'components/header_login.php';
+    } else {
+        include 'components/header.php';
+    }
+    ?>
 
     <!-- Dashboard Banner -->
     <div class="dashboard-banner">

@@ -8,7 +8,7 @@
 ) echo 'style="font-weight:700"'; ?>>Shop</a>
         <a href="?page=contact" <?php if ($_GET['page'] == 'contact') echo 'style="font-weight:700"'; ?>>Contact</a>
     </nav>
-    <a href="?page=login" class="login" <?php if ($_GET['page'] == 'login') echo 'style="font-weight:700"'; ?>>
-        loged in <span class="dot"></span>
+    <a href="?page=dashboard" class="login" <?php if ($_GET['page'] == 'login') echo 'style="font-weight:700"'; ?>>
+        <span class="dot"></span>Profile
     </a>
 </header>
