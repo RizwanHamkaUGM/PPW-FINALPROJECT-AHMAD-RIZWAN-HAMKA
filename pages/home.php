@@ -14,7 +14,13 @@ include 'koneksi.php';
 
 <body>
     <?php
-    include 'components/header.php'
+    session_start();
+    if (isset($_SESSION['user_id'])) {
+        // dd($_SESSION);
+        include 'components/header_login.php';
+    } else {
+        include 'components/header.php';
+    }
     ?>
     
     <div class="Banner">
@@ -114,7 +120,6 @@ include 'koneksi.php';
 
     <?php
     include 'components/footer.php';
-    include 'components/modal.php'
     ?>
 
 </body>

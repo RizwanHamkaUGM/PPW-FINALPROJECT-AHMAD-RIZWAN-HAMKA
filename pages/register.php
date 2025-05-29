@@ -19,19 +19,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $passwordInput = $_POST['password'];
     $confirmPassword = $_POST['confirm_password'];
 
-    // Validasi password cocok
     if ($passwordInput !== $confirmPassword) {
         $registerError = "Password tidak cocok!";
     } else {
-        // Hash password
         $hashedPassword = password_hash($passwordInput, PASSWORD_DEFAULT);
 
-        // Insert data ke database
         $stmt = $conn->prepare("INSERT INTO users (name, email, password, phone_number) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("ssss", $name, $email, $hashedPassword, $phone_number);
 
         if ($stmt->execute()) {
-            $successMessage = "Registrasi berhasil! Silakan <a href='login.php'>login</a>.";
+            $successMessage = "Registrasi berhasil! Silakan <a href='?page=login'>login</a>.";
         } else {
             $registerError = "Gagal mendaftar: " . $stmt->error;
         }
@@ -73,7 +70,7 @@ $conn->close();
     <p class="success"><?php echo $successMessage; ?></p>
 <?php endif; ?>
 
-<form method="POST" action="register.php">
+<form method="POST" action="?page=register">
     <label>Nama:</label>
     <input type="text" name="name" required>
 
@@ -92,7 +89,7 @@ $conn->close();
     <input type="submit" value="Daftar">
 </form>
 
-<p>Sudah punya akun? <a href="login.php">Login</a></p>
+<p>Sudah punya akun? <a href="?page=login">Login</a></p>
 
 </body>
 </html>

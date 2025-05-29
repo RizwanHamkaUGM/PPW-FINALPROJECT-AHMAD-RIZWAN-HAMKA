@@ -12,13 +12,19 @@ include 'koneksi.php';
 </head>
 <body>
     <?php
-    include 'components/header.php'
+    session_start();
+    if (isset($_SESSION['user_id'])) {
+        // dd($_SESSION);
+        include 'components/header_login.php';
+    } else {
+        include 'components/header.php';
+    }
     ?>
 
     <div class="Product-section">
         <div class="product-container">
             <div class="product-navigation">
-                <div class="category">All Products</div>
+                <div class="category">All Product</div>
                 <?php
                     include 'components/navigation.php'
                 ?>

@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 setcookie("user_role", $user['role'], time() + (86400 * 30), "/");
             }
 
-            header("Location: dashboard.php");
+            header("Location: ?page=dashboard");
             exit();
         } else {
             $loginError = "Password salah!";
@@ -88,7 +88,7 @@ $conn->close();
     <input type="submit" value="Login">
 </form>
 
-<p>Belum punya akun? <a href="register.php">Daftar</a></p>
+<p>Belum punya akun? <a href="?page=register">Daftar</a></p>
 
 </body>
 </html>
