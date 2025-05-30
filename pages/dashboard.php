@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Cek apakah user sudah login
 if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'user') {
     header("Location: ?page=login");
     exit();
@@ -50,7 +49,7 @@ if ($_GET['action'] ?? '' === 'logout') {
     exit();
 }
 
-// Get user orders with products
+
 $orderStmt = $pdo->prepare("
     SELECT 
         o.id as order_id,
@@ -73,7 +72,6 @@ $orderStmt = $pdo->prepare("
 $orderStmt->execute([$user_id]);
 $orders = $orderStmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Group orders by order_id
 $groupedOrders = [];
 foreach ($orders as $order) {
     $groupedOrders[$order['order_id']]['info'] = [
@@ -242,7 +240,6 @@ foreach ($orders as $order) {
             document.getElementById('editProfileModal').style.display = 'none';
         }
 
-        // Close modal when clicking outside
         window.onclick = function(event) {
             const modal = document.getElementById('editProfileModal');
             if (event.target == modal) {
@@ -250,7 +247,6 @@ foreach ($orders as $order) {
             }
         }
 
-        // Auto hide alerts after 5 seconds
         setTimeout(function() {
             const alerts = document.querySelectorAll('.alert');
             alerts.forEach(function(alert) {

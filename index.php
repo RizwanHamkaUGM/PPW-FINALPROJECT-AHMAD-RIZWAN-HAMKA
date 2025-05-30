@@ -17,6 +17,8 @@ $allowed_pages = [
     'login' => 'pages/login.php',
     'register' => 'pages/register.php',
     'logout' => 'pages/logout.php',
+
+    'submit-order' => 'pages/submit-order.php',
 ];
 
 

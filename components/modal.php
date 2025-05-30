@@ -79,9 +79,45 @@
         event.preventDefault(); 
         const productId = document.getElementById('modalProductId').value;
         const quantity = document.getElementById('quantity').value;
-        alert(`Product ID: ${productId}\nQuantity: ${quantity}\n\nForm submitted! (Implement actual submission logic)`);
+        const productPriceText = document.getElementById('modalProductPrice').textContent;
+        const onlyNumbers = productPriceText.replace(/[^\d]/g, ''); // hapus semua selain angka
+        const price = parseInt(onlyNumbers, 10) * quantity;
+        const userId = <?php echo isset($_SESSION['user_id']) ? json_encode($_SESSION['user_id']) : 'null'; ?>;
+        console.log("User ID:", userId);
+
+        alert(`Product ID: ${productId}\nQuantity: ${quantity}\nPrice: ${price}\nuser id: ${userId}\nForm submitted! (Implement actual submission logic)`);
+
+        storeDataOrder(productId, quantity, price, userId);
         closeModal();
     });
+
+    function storeDataOrder(productId, quantity, price, userId) {
+    fetch('?page=submit-order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                productId: productId,
+                quantity: quantity,
+                price: price,
+                userId: userId
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Pesanan berhasil disimpan!");
+            } else {
+                alert("Gagal menyimpan pesanan: " + (data.error || ''));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Terjadi kesalahan saat mengirim data.");
+        });
+    }
+
 
     function fetchProductDescription(productId) {
         modalProductDescription.innerHTML = '<p>Loading full description...</p>';
