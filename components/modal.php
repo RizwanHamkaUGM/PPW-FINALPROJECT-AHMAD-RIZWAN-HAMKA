@@ -42,8 +42,7 @@
             const productName = card.querySelector('.card-title h3').textContent; //
             const productPriceText = card.querySelector('.card-title p').textContent; //
             const productCategory = card.dataset.category || 'N/A'; 
-            
-            const productId = productName.replace(/\s+/g, '-').toLowerCase();
+            const productId = card.querySelector('.card-title h2').textContent;
 
 
             modalProductImage.src = productImageSrc;

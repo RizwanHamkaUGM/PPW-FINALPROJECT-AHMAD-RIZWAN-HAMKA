@@ -31,6 +31,7 @@ include 'koneksi.php';
             </div>
             <div class="card-container" id="product-cards">
                 <?php
+                // dd($all_products);
                 if (isset($all_products) && !empty($all_products)) {
                     foreach ($all_products as $row) {
                         $category = strtolower($row["category"] ?? 'clothing');
@@ -39,6 +40,7 @@ include 'koneksi.php';
                         echo '      <img src="' . htmlspecialchars($row["image_url"] ?? 'assets/images/default.jpg') . '" alt="' . htmlspecialchars($row["name"] ?? 'Product') . '" loading="lazy">';
                         echo '  </div>';
                         echo '  <div class="card-title">'; 
+                        echo '      <h2 class="carde-id" hidden>' . $row["id"]. '</h2>';
                         echo '      <h3 class="carde-title">' . htmlspecialchars(implode(' ', array_slice(explode(' ', $row["name"] ?? 'Unnamed Product'), 0, 3))) . '</h3>';   
                         echo '      <p class="card-price">Rp ' . number_format($row["price"] ?? 0, 0, ',', '.') . '</p>';
                         echo '  </div>';
