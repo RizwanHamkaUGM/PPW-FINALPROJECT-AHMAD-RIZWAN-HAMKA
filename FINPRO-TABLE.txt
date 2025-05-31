@@ -178,5 +178,3 @@
     (16, 'Crew Socks'),
     (17, 'Ankle Socks'),
     (18, 'Crew Socks');
-
-    select name, image_url from products;
