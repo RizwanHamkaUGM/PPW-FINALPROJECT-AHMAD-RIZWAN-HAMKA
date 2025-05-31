@@ -7,8 +7,10 @@ $allowed_pages = [
     'home' => 'pages/home.php',
     'contact' => 'pages/contact.php',
     'dashboard' => 'pages/dashboard.php',
-    'profile' => 'pages/profile.php',
     'keranjang' => 'pages/keranjang.php',
+    
+    'profile' => 'pages/profile.php',
+    'cart' => 'pages/cart.php',
     
     'shop' => 'pages/shop.php',
     'shop-clothing' => 'pages/shop-clothing.php',
@@ -19,6 +21,7 @@ $allowed_pages = [
     'logout' => 'pages/logout.php',
 
     'submit-order' => 'pages/submit-order.php',
+    'submit-cart' => 'pages/submit-cart.php',
 ];
 
 

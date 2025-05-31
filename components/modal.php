@@ -92,7 +92,7 @@
     });
 
     function storeDataOrder(productId, quantity, price, userId) {
-    fetch('?page=submit-order', {
+    fetch('?page=submit-cart', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
