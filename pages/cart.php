@@ -18,7 +18,6 @@ try {
 
 $user_id = $_SESSION['user_id'];
 
- 
 if ($_POST) {
     if (isset($_POST['action'])) {
         switch ($_POST['action']) {
@@ -54,7 +53,6 @@ if ($_POST) {
                 break;
         }
         
-         
         header("Location: ?page=cart");
         exit();
     }
