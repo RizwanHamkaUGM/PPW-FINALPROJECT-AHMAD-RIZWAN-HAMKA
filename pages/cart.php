@@ -41,39 +41,6 @@ $cartStmt = $pdo->prepare("
 ");
 $cartStmt->execute([$user_id]);
 $cartItems = $cartStmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-$orderStmt = $pdo->prepare("
-    SELECT 
-        o.id as order_id,
-        o.order_date,
-        o.total_price,
-        o.status,
-        p.name as product_name,
-        p.image_url,
-        p.price,
-        oi.quantity,
-        oi.item_price,
-        pc.name as category_name
-    FROM orders o
-    JOIN order_items oi ON o.id = oi.order_id
-    JOIN products p ON oi.product_id = p.id
-    LEFT JOIN product_categories pc ON p.category_id = pc.id
-    WHERE o.user_id = ?
-    ORDER BY o.order_date DESC
-");
-$orderStmt->execute([$user_id]);
-$orders = $orderStmt->fetchAll(PDO::FETCH_ASSOC);
-
-$groupedOrders = [];
-foreach ($orders as $order) {
-    $groupedOrders[$order['order_id']]['info'] = [
-        'order_date' => $order['order_date'],
-        'total_price' => $order['total_price'],
-        'status' => $order['status']
-    ];
-    $groupedOrders[$order['order_id']]['items'][] = $order;
-}
 ?>
 
 <!DOCTYPE html>
@@ -153,58 +120,10 @@ foreach ($orders as $order) {
     </div>
 </div>
 
-    <!-- Edit Profile Modal -->
-    <div class="modal" id="editProfileModal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeEditModal()">&times;</span>
-            <h2 class="modal-title">Edit Profile</h2>
-            <form method="POST">
-                <input type="hidden" name="action" value="update_profile">
-                
-                <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" class="form-control" id="name" name="name" 
-                            value="<?= htmlspecialchars($user['name']) ?>" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" 
-                            value="<?= htmlspecialchars($user['email']) ?>" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="phone_number">Phone Number</label>
-                    <input type="text" class="form-control" id="phone_number" name="phone_number" 
-                            value="<?= htmlspecialchars($user['phone_number'] ?? '') ?>">
-                </div>
-
-                <div class="modal-actions">
-                    <button type="button" class="btn-cancel" onclick="closeEditModal()">Cancel</button>
-                    <button type="submit" class="btn-save">Save Changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
 
     <?php include 'components/footer.php'; ?>
 
     <script>
-        function openEditModal() {
-            document.getElementById('editProfileModal').style.display = 'block';
-        }
-
-        function closeEditModal() {
-            document.getElementById('editProfileModal').style.display = 'none';
-        }
-
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('editProfileModal');
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        }
 
         // Auto hide alerts after 5 seconds
         setTimeout(function() {
