@@ -15,7 +15,14 @@ if (array_key_exists($page, $allowed_pages)) {
 
     <body>
         <?php
-        include 'components/header.php'
+        session_start();
+        if (isset($_SESSION['user_id'])) {
+            include $_SESSION['user_role'] === 'user' 
+                ? 'components/header_login.php' 
+                : 'components/header_admin.php';
+        } else {
+            include 'components/header.php';
+        }
         ?>
         
         <div class="Banner" style="min-height: 60vh; align-items: center; justify-content: center; text-align: center; background-color: white;">

@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
             $pdo->commit();
             $_SESSION['success_message'] = "Order placed successfully! Your Order ID is #{$order_id}. Please proceed with the payment.";
 
-            header("Location: ?page=dashboard"); 
+            header("Location: ?page=profile"); 
             exit();
 
         } catch (PDOException $e) {

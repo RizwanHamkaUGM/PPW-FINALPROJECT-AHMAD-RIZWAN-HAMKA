@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'user') {
+if (!isset($_SESSION['user_id'])) {
     header("Location: ?page=login");
     exit();
 }
@@ -96,8 +96,9 @@ foreach ($orders as $order) {
 <body>
     <?php
     if (isset($_SESSION['user_id'])) {
-        // dd($_SESSION);
-        include 'components/header_login.php';
+        include $_SESSION['user_role'] === 'user' 
+            ? 'components/header_login.php' 
+            : 'components/header_admin.php';
     } else {
         include 'components/header.php';
     }

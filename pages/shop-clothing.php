@@ -1,7 +1,7 @@
 <?php
 include 'koneksi.php'; 
 try {
-    $clothing_all = $conn->query("SELECT * FROM products WHERE type = 'clothing'");
+    $clothing_all = $conn->query("SELECT * FROM products WHERE type = 'clothing' ORDER BY RAND()");
     if ($clothing_all) {
         $clothing_all = $clothing_all->fetch_all(MYSQLI_ASSOC);
     } else {
@@ -28,8 +28,9 @@ try {
     <?php
     session_start();
     if (isset($_SESSION['user_id'])) {
-        // dd($_SESSION);
-        include 'components/header_login.php';
+        include $_SESSION['user_role'] === 'user' 
+            ? 'components/header_login.php' 
+            : 'components/header_admin.php';
     } else {
         include 'components/header.php';
     }
@@ -55,7 +56,8 @@ try {
                         echo '  </div>';
                         echo '  <div class="card-title">'; 
                         echo '      <h2 class="carde-id" hidden>' . $row["id"]. '</h2>';
-                        echo '      <h3 class="carde-title">' . htmlspecialchars(implode(' ', array_slice(explode(' ', $row["name"] ?? 'Unnamed Product'), 0, 3))) . '</h3>';   
+                        echo '      <h4 class="carde-title" hidden>' . $row["name"]. '</h4>';
+                        echo '      <h3 class="carde-title">' . htmlspecialchars(implode(' ', array_slice(explode(' ', $row["name"] ?? 'Unnamed Product'), 0, 2))) . '</h3>';
                         echo '      <p class="card-price">Rp ' . number_format($row["price"] ?? 0, 0, ',', '.') . '</p>';
                         echo '  </div>';
                         echo '</div>';

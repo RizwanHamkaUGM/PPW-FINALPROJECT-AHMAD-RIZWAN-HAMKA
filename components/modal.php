@@ -82,7 +82,7 @@
     productCards.forEach(card => {
         card.addEventListener('click', function () {
             const productImageSrc = card.querySelector('.card-image img').src;
-            const productName = card.querySelector('.card-title h3').textContent;
+            const productName = card.querySelector('.card-title h4').textContent;
             const productPriceText = card.querySelector('.card-title p').textContent;
             const productCategory = card.dataset.category || 'N/A';
             const productId = card.querySelector('.card-title h2').textContent;

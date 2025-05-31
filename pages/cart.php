@@ -97,9 +97,11 @@ $cartItems = $cartStmt->fetchAll(PDO::FETCH_ASSOC);
 <body>
     <?php
     if (isset($_SESSION['user_id'])) {
-        include 'components/header_login.php';  
+        include $_SESSION['user_role'] === 'user' 
+            ? 'components/header_login.php' 
+            : 'components/header_admin.php';
     } else {
-        include 'components/header.php'; 
+        include 'components/header.php';
     }
     ?>
 
@@ -151,8 +153,8 @@ $cartItems = $cartStmt->fetchAll(PDO::FETCH_ASSOC);
                                     <div class="order-item">
                                         <?php if ($item['image_url']): ?>
                                             <img src="<?= htmlspecialchars($item['image_url']) ?>" 
-                                                 alt="<?= htmlspecialchars($item['product_name']) ?>" 
-                                                 class="item-image">
+                                                    alt="<?= htmlspecialchars($item['product_name']) ?>" 
+                                                    class="item-image">
                                         <?php else: ?>
                                             <div class="item-image" style="background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #666; font-size:10px; text-align:center;">
                                                 No Image
@@ -234,7 +236,6 @@ $cartItems = $cartStmt->fetchAll(PDO::FETCH_ASSOC);
             }
         }
 
-         
         setTimeout(function() {
             const alerts = document.querySelectorAll('.alert');
             alerts.forEach(function(alert) {

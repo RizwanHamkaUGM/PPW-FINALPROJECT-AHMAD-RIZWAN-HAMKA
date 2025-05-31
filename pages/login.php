@@ -36,13 +36,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 setcookie("user_role", $user['role'], time() + (86400 * 30), "/");
             }
 
-            header("Location: ?page=dashboard");
+            if ($_SESSION['user_role'] == 'user'){
+                header("Location: ?page=profile");
+            } else{
+                header("Location: ?page=dashboard");
+            }
+            
             exit();
         } else {
-            $loginError = "Password salah!";
+            $loginError = "Wrong Password!";
         }
     } else {
-        $loginError = "Email tidak ditemukan!";
+        $loginError = "Email not found";
     }
 
     $stmt->close();
