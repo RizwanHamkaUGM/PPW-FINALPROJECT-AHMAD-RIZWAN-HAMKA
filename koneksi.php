@@ -10,7 +10,6 @@ if ($conn->connect_error) {
     die("Koneksi gagal: " . $conn->connect_error);
 }
 
-// Set charset untuk menghindari masalah encoding
 $conn->set_charset("utf8");
 
 function dd($data) {

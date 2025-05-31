@@ -210,7 +210,7 @@ $cartItems = $cartStmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
-    <?php include 'components/footer.php'; // Assumed to output <footer> or similar block 
+    <?php include 'components/footer.php'; 
     ?>
 
     <script>

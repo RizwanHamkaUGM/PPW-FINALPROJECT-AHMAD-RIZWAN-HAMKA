@@ -17,12 +17,10 @@ try {
 
 $user_id = $_SESSION['user_id'];
 
-// Get user data
 $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Handle profile update
 if ($_POST['action'] ?? '' === 'update_profile') {
     $name = trim($_POST['name']);
     $email = trim($_POST['email']);
@@ -34,7 +32,6 @@ if ($_POST['action'] ?? '' === 'update_profile') {
         $updateStmt->execute([$name, $email, $phone, $user_id]);
         $_SESSION['success_message'] = "Profil berhasil diperbarui!";
         
-        // Update user data
         $stmt->execute([$user_id]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
     } catch(PDOException $e) {
@@ -42,14 +39,12 @@ if ($_POST['action'] ?? '' === 'update_profile') {
     }
 }
 
-// Handle logout
 if ($_GET['action'] ?? '' === 'logout') {
     session_destroy();
     header("Location: ?page=home");
     exit();
 }
 
-// Get user orders with products
 $orderStmt = $pdo->prepare("
     SELECT 
         o.id as order_id,
@@ -241,7 +236,6 @@ foreach ($orders as $order) {
             document.getElementById('editProfileModal').style.display = 'none';
         }
 
-        // Close modal when clicking outside
         window.onclick = function(event) {
             const modal = document.getElementById('editProfileModal');
             if (event.target == modal) {

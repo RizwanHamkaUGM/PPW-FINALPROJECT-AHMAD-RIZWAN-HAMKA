@@ -71,7 +71,6 @@ try {
 
             <div class="card-container" id="product-cards">
                 <?php
-                // Debug: Cek apakah variabel ada
                 if (isset($clothing_only_4)) {
                     echo "<!-- Debug: clothing_only_4 tersedia, jumlah: " . count($clothing_only_4) . " -->";
                     

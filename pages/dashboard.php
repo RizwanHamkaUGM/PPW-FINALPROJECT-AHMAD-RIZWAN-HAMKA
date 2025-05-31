@@ -1,7 +1,6 @@
 <?php
-// Placeholder untuk session management dan database connection
 session_start();
-include 'koneksi.php'; // Ensure this file has $host, $database, $user, $password
+include 'koneksi.php'; 
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$database", $user, $password);
@@ -10,9 +9,8 @@ try {
     die("Connection failed: " . $e->getMessage());
 }
 
-// Check if user is admin
 if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
-    header("Location: ?page=home"); // Or your login page
+    header("Location: ?page=home"); 
     exit();
 }
 
@@ -23,11 +21,10 @@ $stmt->execute([$user_id]);
 $admin = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$admin) {
-    header("Location: ?page=logout"); // Or an error page
+    header("Location: ?page=logout"); 
     exit();
 }
 
-// Fetch all available categories for dropdowns
 $categories_stmt = $pdo->query("SELECT id, name FROM product_categories ORDER BY name ASC");
 $available_categories = $categories_stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -39,7 +36,6 @@ $stats_stmt = $pdo->prepare("SELECT
 $stats_stmt->execute();
 $stats = ($stats_stmt->fetchAll(PDO::FETCH_ASSOC))[0];
 
-// Fetch products for display and for JS editing
 $product_stmt = $pdo->prepare("
     SELECT
         p.id,
@@ -64,7 +60,7 @@ foreach ($raw_products_data as $item) {
         'name' => $item['name'],
         'price' => (int) $item['price'],
         'category_id' => $item['category_id'],
-        'category_name' => $item['category_name'] ?? 'N/A', // Handle if category might be null
+        'category_name' => $item['category_name'] ?? 'N/A', 
         'type' => $item['type'],
         'stock' => $item['stock'],
         'image_url' => $item['image_url']
@@ -97,13 +93,11 @@ foreach ($raw_recent_orders as $item) {
     ];
 }
 
-// Unified POST request handling
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         if (isset($_POST['action'])) {
             switch ($_POST['action']) {
                 case 'add_product':
-                    // Validate category_id and type
                     if (empty($_POST['product_category_id']) || empty($_POST['product_type'])) {
                         throw new Exception("Category and Type are required.");
                     }
@@ -111,25 +105,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         throw new Exception("Invalid product type.");
                     }
 
-                    // Insert product
                     $insert_product = $pdo->prepare("INSERT INTO products (name, price, image_url, stock, category_id, type) VALUES (?, ?, ?, ?, ?, ?)");
                     $insert_product->execute([
                         $_POST['product_name'],
                         $_POST['product_price'],
                         $_POST['product_image'],
                         $_POST['product_stock'],
-                        $_POST['product_category_id'], // Directly use the ID
-                        $_POST['product_type']         // Directly use the type
+                        $_POST['product_category_id'], 
+                        $_POST['product_type']         
                     ]);
                     
                     $_SESSION['message'] = "Product added successfully!";
                     $_SESSION['message_type'] = "success";
-                    header("Location: ?page=dashboard"); // Refresh to see changes
+                    header("Location: ?page=dashboard"); 
                     exit();
-                    // break; // Not strictly needed after exit()
 
                 case 'edit_product':
-                    // Validate category_id and type
                     if (empty($_POST['product_category_id']) || empty($_POST['product_type'])) {
                         throw new Exception("Category and Type are required.");
                     }
@@ -144,8 +135,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             $_POST['product_price'],
                             $_POST['product_image'],
                             $_POST['product_stock'],
-                            $_POST['product_category_id'], // Directly use the ID
-                            $_POST['product_type'],        // Directly use the type
+                            $_POST['product_category_id'],
+                            $_POST['product_type'], 
                             $_POST['product_id']
                         ]);
                     } else {
@@ -154,8 +145,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             $_POST['product_name'],
                             $_POST['product_price'],
                             $_POST['product_stock'],
-                            $_POST['product_category_id'], // Directly use the ID
-                            $_POST['product_type'],        // Directly use the type
+                            $_POST['product_category_id'], 
+                            $_POST['product_type'],       
                             $_POST['product_id']
                         ]);
                     }
@@ -164,7 +155,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['message_type'] = "success";
                     header("Location: ?page=dashboard");
                     exit();
-                    // break;
 
                 case 'delete_product':
                     $delete_product = $pdo->prepare("DELETE FROM products WHERE id = ?");
@@ -174,7 +164,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['message_type'] = "success";
                     header("Location: ?page=dashboard");
                     exit();
-                    // break;
             }
         }
     } catch (Exception $e) {

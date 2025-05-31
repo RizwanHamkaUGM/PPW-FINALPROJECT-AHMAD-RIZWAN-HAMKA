@@ -395,7 +395,6 @@ $conn->close();
     </footer>
 
     <script>
-        // Add some client-side validation
         document.getElementById('confirm_password').addEventListener('input', function() {
             const password = document.getElementById('password').value;
             const confirmPassword = this.value;
@@ -407,7 +406,6 @@ $conn->close();
             }
         });
 
-        // Phone number formatting
         document.getElementById('phone_number').addEventListener('input', function() {
             let value = this.value.replace(/\D/g, '');
             if (value.length > 0 && !value.startsWith('0')) {
