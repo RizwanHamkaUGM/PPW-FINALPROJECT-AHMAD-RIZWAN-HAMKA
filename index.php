@@ -7,10 +7,11 @@ $allowed_pages = [
     'home' => 'pages/home.php',
     'contact' => 'pages/contact.php',
     'dashboard' => 'pages/dashboard.php',
-    'keranjang' => 'pages/keranjang.php',
+    'keranjang' => 'pages/keranjang.php',   
     
     'profile' => 'pages/profile.php',
     'cart' => 'pages/cart.php',
+    'checkout-orders' => 'pages/checkout-orders.php',
     
     'shop' => 'pages/shop.php',
     'shop-clothing' => 'pages/shop-clothing.php',
