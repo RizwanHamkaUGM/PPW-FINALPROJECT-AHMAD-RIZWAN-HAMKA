@@ -20,7 +20,7 @@ function dd($data) {
     die();
 }
 
-// SEMUA QUERY DISINI dengan error handling
+
 try {
     $result_clothing = $conn->query("SELECT * FROM products WHERE type = 'clothing' LIMIT 4");
     if ($result_clothing) {

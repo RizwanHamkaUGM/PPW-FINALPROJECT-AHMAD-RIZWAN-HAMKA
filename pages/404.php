@@ -1,9 +1,7 @@
 <?php
-// Routing dengan simple 404 page
 if (array_key_exists($page, $allowed_pages)) {
     include $allowed_pages[$page];
 } else {
-    // Simple 404 Page yang konsisten dengan style home
     ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -12,7 +10,7 @@ if (array_key_exists($page, $allowed_pages)) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>404 - Page Not Found</title>
         <link rel="stylesheet" href="assets/css/style.css">
-        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+        <link href="https:
     </head>
 
     <body>
@@ -20,7 +18,6 @@ if (array_key_exists($page, $allowed_pages)) {
         include 'components/header.php'
         ?>
         
-        <!-- Menggunakan style Banner yang sama seperti di home -->
         <div class="Banner" style="min-height: 60vh; align-items: center; justify-content: center; text-align: center; background-color: white;">
             <div class="text-area" style="max-width: 100%; padding: 2rem; background-color: white;">
                 <div class="banner-title">

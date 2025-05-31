@@ -1,5 +1,18 @@
 <?php
 include 'koneksi.php'; 
+try {
+    $result_all = $conn->query("SELECT * FROM products");
+    if ($result_all) {
+        $all_products = $result_all->fetch_all(MYSQLI_ASSOC);
+    } else {
+        echo "Error query accessory: " . $conn->error;
+        $all_products = [];
+    }
+    // dd($all_products);
+
+} catch (Exception $e) {
+    echo "Database error: " . $e->getMessage();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +48,7 @@ include 'koneksi.php';
                 if (isset($all_products) && !empty($all_products)) {
                     foreach ($all_products as $row) {
                         $category = strtolower($row["category"] ?? 'clothing');
-                        echo '<div class="card" data-category="' . htmlspecialchars($category) . '">';
+                        echo '<div class="card" data-category="' . htmlspecialchars($row["type"]) . '">';
                         echo '  <div class="card-image">';
                         echo '      <img src="' . htmlspecialchars($row["image_url"] ?? 'assets/images/default.jpg') . '" alt="' . htmlspecialchars($row["name"] ?? 'Product') . '" loading="lazy">';
                         echo '  </div>';
@@ -71,7 +84,8 @@ include 'koneksi.php';
 
     <?php
     include 'components/footer.php';
-    include 'components/modal.php'
+    include 'components/modal.php';
+    include 'components/modal-login-alert.php';
     ?>
 
 </body>

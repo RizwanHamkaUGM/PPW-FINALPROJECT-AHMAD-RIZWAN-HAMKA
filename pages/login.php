@@ -1,10 +1,9 @@
 <?php
 session_start();
 
-$host = "localhost";
-$user = "root";
-$password = "Megamode#12";
-$database = "FINPRO";
+
+include 'koneksi.php'; 
+
 
 $conn = new mysqli($host, $user, $password, $database);
 if ($conn->connect_error) {
@@ -30,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_name'] = $user['name'];
             $_SESSION['user_role'] = $user['role'];
 
-            // Jika Remember Me dicentang, buat cookie
+            // buat cookie
             if (isset($_POST['remember'])) {
                 setcookie("user_id", $user['id'], time() + (86400 * 30), "/");
                 setcookie("user_name", $user['name'], time() + (86400 * 30), "/");
@@ -332,7 +331,7 @@ $conn->close();
                 <div class="form-group">
                     <label for="email">Email Address</label>
                     <input type="email" id="email" name="email" class="form-control" required 
-                           value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
+                            value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
                 </div>
 
                 <div class="form-group">
@@ -355,7 +354,7 @@ $conn->close();
     </div>
 
     <footer>
-        <div>© 2024 Your Store. All rights reserved.</div>
+        <div>© 2025 zwnzs Store. All rights reserved.</div>
         <div>Made with ❤️</div>
     </footer>
 </body>

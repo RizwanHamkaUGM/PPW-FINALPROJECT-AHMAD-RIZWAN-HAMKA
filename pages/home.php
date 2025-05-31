@@ -1,5 +1,29 @@
 <?php
 include 'koneksi.php'; 
+
+try {
+    $result_clothing = $conn->query("SELECT * FROM products WHERE type = 'clothing' LIMIT 4");
+    if ($result_clothing) {
+        $clothing_only_4 = $result_clothing->fetch_all(MYSQLI_ASSOC);
+    } else {
+        echo "Error query clothing: " . $conn->error;
+        $clothing_only_4 = [];
+    }
+
+    $result_accessory = $conn->query("SELECT * FROM products WHERE type = 'accessory' LIMIT 4");
+    if ($result_accessory) {
+        $accessory_only_4 = $result_accessory->fetch_all(MYSQLI_ASSOC);
+    } else {
+        echo "Error query accessory: " . $conn->error;
+        $accessory_only_4 = [];
+    }
+
+    
+} catch (Exception $e) {
+    echo "Database error: " . $e->getMessage();
+    $clothing_only_4 = [];
+    $accessory_only_4 = [];
+}
 ?>
 
 <!DOCTYPE html>
@@ -86,7 +110,6 @@ include 'koneksi.php';
             </div>
             <div class="card-container" id="product-cards">
                 <?php
-                // Debug: Cek apakah variabel ada
                 if (isset($accessory_only_4)) {
                     echo "<!-- Debug: accessory_only_4 tersedia, jumlah: " . count($accessory_only_4) . " -->";
                     

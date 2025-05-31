@@ -1,5 +1,18 @@
 <?php
 include 'koneksi.php'; 
+try {
+    $accessory_all = $conn->query("SELECT * FROM products WHERE type = 'accessory'");
+    if ($accessory_all) {
+        $accessory_all = $accessory_all->fetch_all(MYSQLI_ASSOC);
+    } else {
+        echo "Error query clothing: " . $conn->error;
+        $accessory_all = [];
+    }
+    // dd($accessory_all);
+
+} catch (Exception $e) {
+    echo "Database error: " . $e->getMessage();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,27 +25,35 @@ include 'koneksi.php';
 </head>
 <body>
     <?php
-    include 'components/header.php'
+    session_start();
+    if (isset($_SESSION['user_id'])) {
+        // dd($_SESSION);
+        include 'components/header_login.php';
+    } else {
+        include 'components/header.php';
+    }
     ?>
 
     <div class="Product-section">
         <div class="product-container">
             <div class="product-navigation">
-                <div class="category">All Products</div>
+                <div class="category">All Product</div>
                 <?php
-                include 'components/navigation.php'
+                    include 'components/navigation.php'
                 ?>
             </div>
             <div class="card-container" id="product-cards">
                 <?php
+                // dd($all_products);
                 if (isset($accessory_all) && !empty($accessory_all)) {
                     foreach ($accessory_all as $row) {
                         $category = strtolower($row["category"] ?? 'clothing');
-                        echo '<div class="card" data-category="' . htmlspecialchars($category) . '">';
+                        echo '<div class="card" data-category="' . htmlspecialchars($row["type"]) . '">';
                         echo '  <div class="card-image">';
                         echo '      <img src="' . htmlspecialchars($row["image_url"] ?? 'assets/images/default.jpg') . '" alt="' . htmlspecialchars($row["name"] ?? 'Product') . '" loading="lazy">';
                         echo '  </div>';
                         echo '  <div class="card-title">'; 
+                        echo '      <h2 class="carde-id" hidden>' . $row["id"]. '</h2>';
                         echo '      <h3 class="carde-title">' . htmlspecialchars(implode(' ', array_slice(explode(' ', $row["name"] ?? 'Unnamed Product'), 0, 3))) . '</h3>';   
                         echo '      <p class="card-price">Rp ' . number_format($row["price"] ?? 0, 0, ',', '.') . '</p>';
                         echo '  </div>';
@@ -63,17 +84,9 @@ include 'koneksi.php';
 
     <?php
     include 'components/footer.php';
-    include 'components/modal.php'
+    include 'components/modal.php';
+    include 'components/modal-login-alert.php';
     ?>
-
-    <script>
-    document.querySelectorAll('.clothing-button').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.clothing-button').forEach(b => b.classList.remove('selected'));
-            btn.classList.add('selected');
-        });
-    });
-    </script>   
 
 </body>
 </html>

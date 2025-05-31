@@ -1,13 +1,13 @@
 <?php
 session_start();
 
-// Cek apakah user sudah login
+
 if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'user') {
     header("Location: ?page=login");
     exit();
 }
 
-include 'koneksi.php'; // Ensure this file correctly sets $host, $database, $user, $password
+include 'koneksi.php';  
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$database", $user, $password);
@@ -18,7 +18,7 @@ try {
 
 $user_id = $_SESSION['user_id'];
 
-// Handle cart actions
+ 
 if ($_POST) {
     if (isset($_POST['action'])) {
         switch ($_POST['action']) {
@@ -43,7 +43,7 @@ if ($_POST) {
                 $_SESSION['success_message'] = "Item removed from cart!";
                 break;
                 
-            case 'update_profile': // This case seems out of place for cart.php, but kept as is from original
+            case 'update_profile':  
                 $name = $_POST['name'];
                 $email = $_POST['email'];
                 $phone_number = $_POST['phone_number'];
@@ -54,7 +54,7 @@ if ($_POST) {
                 break;
         }
         
-        // Redirect to prevent form resubmission
+         
         header("Location: ?page=cart");
         exit();
     }
@@ -64,7 +64,7 @@ $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Ambil data keranjang
+ 
 $cartStmt = $pdo->prepare("
     SELECT 
         ci.id as cart_id,
@@ -94,102 +94,14 @@ $cartItems = $cartStmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style-dashboard.css">
-    <style>
-        /* Basic Reset and Sticky Footer Styles */
-        html {
-            height: 100%;
-        }
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh; /* Minimum height of the viewport */
-            margin: 0; /* Remove default body margin */
-            font-family: 'Poppins', sans-serif; /* Set global font */
-        }
-        .page-content-wrapper { /* New wrapper for main content */
-            flex-grow: 1; /* Allows this element to take up available space */
-        }
-        /* End Sticky Footer Styles */
-
-        /* Additional styles for cart actions (some might be superseded by modal) */
-        .item-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            margin-top: 10px;
-        }
-        
-        .delete-btn, .edit-qty-btn { /* Combined style for similar buttons */
-            background: transparent;
-            color: #000;
-            border: 1px solid #000;
-            padding: 5px 10px;
-            border-radius: 0; /* Match existing style */
-            cursor: pointer;
-            font-size: 12px;
-            font-family: 'Poppins', sans-serif; /* Explicitly set for buttons if needed */
-            transition: all 0.3s ease;
-        }
-        
-        .delete-btn:hover, .edit-qty-btn:hover {
-            background: #000;
-            color: white;
-        }
-
-        .checkout-btn {
-            display: inline-block; 
-            background: #000;
-            color: white    ;
-            border: 1px solid #000;
-            padding: 5px 10px;
-            border-radius: 0;
-            cursor: pointer;
-            font-size: 16px;
-            font-family: 'Poppins', sans-serif; /* Explicitly set for buttons if needed */
-            transition: all 0.3s ease;
-            text-decoration: none;
-            margin-top: 15px; 
-        }
-        .checkout-btn:hover {
-            background: rgb(80, 80, 80);
-            border: 1px solid rgb(80, 80, 80);
-            color: white;
-        }
-
-        .checkout-button-container {
-            text-align: right; 
-            margin-top: 10px; 
-        }
-
-        .alert {
-            padding: 15px;
-            margin: 20px auto; 
-            border-radius: 0; 
-            font-weight: 400;
-            /* font-family: 'Poppins', sans-serif; /* Inherits from body */
-            width: 90%; 
-            box-sizing: border-box;
-        }
-        
-        .alert-success {
-            background-color: #f8f9fa; 
-            color: #000;
-            border: 1px solid #000;
-        }
-        
-        .alert-error {
-            background-color: #f8f9fa; 
-            color: #000; 
-            border: 1px solid #000; 
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/style-cart.css">
 </head>
 <body>
     <?php
     if (isset($_SESSION['user_id'])) {
-        include 'components/header_login.php'; // Assumed to output <header> or similar block
+        include 'components/header_login.php';  
     } else {
-        include 'components/header.php'; // Assumed to output <header> or similar block
+        include 'components/header.php'; 
     }
     ?>
 
@@ -298,7 +210,8 @@ $cartItems = $cartStmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
-    <?php include 'components/footer.php'; // Assumed to output <footer> or similar block ?>
+    <?php include 'components/footer.php'; // Assumed to output <footer> or similar block 
+    ?>
 
     <script>
         const updateQuantityModal = document.getElementById('updateQuantityModal');
@@ -323,7 +236,7 @@ $cartItems = $cartStmt->fetchAll(PDO::FETCH_ASSOC);
             }
         }
 
-        // Auto hide alerts after 5 seconds
+         
         setTimeout(function() {
             const alerts = document.querySelectorAll('.alert');
             alerts.forEach(function(alert) {

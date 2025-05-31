@@ -17,12 +17,12 @@ try {
 
 $user_id = $_SESSION['user_id'];
 
-// Fetch user details
+ 
 $userStmt = $pdo->prepare("SELECT name, email, phone_number FROM users WHERE id = ?");
 $userStmt->execute([$user_id]);
 $userInfo = $userStmt->fetch(PDO::FETCH_ASSOC);
 
-// Fetch cart items
+ 
 $cartStmt = $pdo->prepare("
     SELECT 
         ci.product_id,
@@ -243,7 +243,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
     if (isset($_SESSION['user_id'])) {
         include 'components/header_login.php';
     } else {
-        include 'components/header.php'; // Should not happen due to check at top
+        include 'components/header.php';  
     }
     ?>
     

@@ -1,8 +1,5 @@
 <?php
-$host = "localhost";
-$user = "root";
-$password = "Megamode#12";
-$database = "FINPRO";
+include 'koneksi.php'; 
 
 $conn = new mysqli($host, $user, $password, $database);
 if ($conn->connect_error) {
@@ -354,15 +351,15 @@ $conn->close();
                     <div class="form-group">
                         <label for="email">Email Address</label>
                         <input type="email" id="email" name="email" class="form-control" required 
-                               value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>"
-                               placeholder="your@email.com">
+                                value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>"
+                                placeholder="your@email.com">
                     </div>
 
                     <div class="form-group">
                         <label for="phone_number">Phone Number</label>
                         <input type="text" id="phone_number" name="phone_number" class="form-control" required 
-                               value="<?php echo isset($_POST['phone_number']) ? htmlspecialchars($_POST['phone_number']) : ''; ?>"
-                               placeholder="08123456789">
+                                value="<?php echo isset($_POST['phone_number']) ? htmlspecialchars($_POST['phone_number']) : ''; ?>"
+                                placeholder="08123456789">
                     </div>
                 </div>
 
@@ -370,7 +367,7 @@ $conn->close();
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password" class="form-control" required
-                               placeholder="Create a strong password">
+                                placeholder="Create a strong password">
                         <div class="password-requirements">
                             Min. 8 characters with letters and numbers
                         </div>
@@ -379,7 +376,7 @@ $conn->close();
                     <div class="form-group">
                         <label for="confirm_password">Confirm Password</label>
                         <input type="password" id="confirm_password" name="confirm_password" class="form-control" required
-                               placeholder="Confirm your password">
+                                placeholder="Confirm your password">
                     </div>
                 </div>
 
@@ -393,7 +390,7 @@ $conn->close();
     </div>
 
     <footer>
-        <div>© 2024 Your Store. All rights reserved.</div>
+        <div>© 2025 zwnzs Store. All rights reserved.</div>
         <div>Made with ❤️</div>
     </footer>
 

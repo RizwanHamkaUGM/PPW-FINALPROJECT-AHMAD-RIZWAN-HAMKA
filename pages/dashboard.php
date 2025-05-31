@@ -103,7 +103,6 @@ foreach ($orders as $order) {
     }
     ?>
 
-    <!-- Dashboard Banner -->
     <div class="dashboard-banner">
         <div class="banner-title">
             <h1>Welcome, <?= htmlspecialchars($user['name']) ?>!</h1>

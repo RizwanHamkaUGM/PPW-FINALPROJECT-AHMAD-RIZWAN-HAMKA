@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Cek apakah user sudah login
 if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'user') {
     header("Location: ?page=login");
     exit();
@@ -73,7 +72,6 @@ $orderStmt = $pdo->prepare("
 $orderStmt->execute([$user_id]);
 $orders = $orderStmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Group orders by order_id
 $groupedOrders = [];
 foreach ($orders as $order) {
     $groupedOrders[$order['order_id']]['info'] = [
