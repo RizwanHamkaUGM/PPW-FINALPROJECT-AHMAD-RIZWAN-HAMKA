@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_payment'])) {
             </div>
 
             <form class="payment-form" method="POST">
-                <p class="dummy-info">This is a simulated payment environment. No real money will be charged.<br>Click the button below to mark this order as 'Paid'.</p>
+                <p class="dummy-info">This is a simulated payment environment</p>
                 <input type="hidden" name="order_id" value="<?= htmlspecialchars($order['id']) ?>">
                 <button type="submit" name="confirm_payment" class="confirm-payment-btn">Confirm Payment</button>
             </form>
