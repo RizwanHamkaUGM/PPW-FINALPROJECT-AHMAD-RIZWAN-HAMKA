@@ -49,6 +49,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_payment'])) {
     try {
         $pdo->beginTransaction();
 
+        $orderItemsStmt = $pdo->prepare(
+            "SELECT product_id, quantity FROM order_items WHERE order_id = ?"
+        );
+        $orderItemsStmt->execute([$order_id]);
+        $items = $orderItemsStmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $updateStockStmt = $pdo->prepare(
+            "UPDATE products SET stock = stock - ? WHERE id = ?"
+        );
+
+        foreach ($items as $item) {
+            $stockCheckStmt = $pdo->prepare("SELECT stock FROM products WHERE id = ? FOR UPDATE");
+            $stockCheckStmt->execute([$item['product_id']]);
+            $currentStock = $stockCheckStmt->fetchColumn();
+
+            if ($currentStock === false || $currentStock < $item['quantity']) {
+                throw new Exception("Maaf, stok untuk salah satu produk dalam pesanan Anda tidak mencukupi. Pembelian tidak dapat dilanjutkan.");
+            }
+
+            $updateStockStmt->execute([$item['quantity'], $item['product_id']]);
+        }
+
         $updateOrderStmt = $pdo->prepare("UPDATE orders SET status = 'paid' WHERE id = ?");
         $updateOrderStmt->execute([$order_id]);
 
@@ -63,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_payment'])) {
 
     } catch (Exception $e) {
         $pdo->rollBack();
-        $_SESSION['error_message'] = "Payment simulation failed. Please try again. Error: " . $e->getMessage();
+        $_SESSION['error_message'] = "Payment simulation failed. Error: " . $e->getMessage();
     }
 }
 ?>
@@ -89,38 +111,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_payment'])) {
     ?>
 
     <div class="page-content-wrapper">
-        <div class="payment-container">
-            <div class="payment-header">
-                <h1 class="payment-title">Payment Simulation</h1>
-                <p class="payment-subtitle">Complete your purchase for Order #<?= htmlspecialchars($order['id']) ?></p>
+        <div class="payment-container" style="max-width: 600px; margin: 50px auto; padding: 35px; background-color: #f9f9f9; border-radius: 8px;">
+            <div class="payment-header" style="text-align: center; margin-bottom: 30px;">
+                <h1 class="payment-title" style="font-size: 26px; font-weight: 600;">Payment Simulation</h1>
+                <p class="payment-subtitle" style="font-size: 16px; color: #777;">Complete your purchase for Order #<?= htmlspecialchars($order['id']) ?></p>
             </div>
 
             <?php if (isset($_SESSION['error_message'])): ?>
-                <div class="alert alert-error">
+                <div class="alert alert-error" style="padding: 15px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; border-radius: 4px; margin-bottom: 20px;">
                     <?= htmlspecialchars($_SESSION['error_message']) ?>
                 </div>
                 <?php unset($_SESSION['error_message']); ?>
             <?php endif; ?>
 
             <div class="payment-details">
-                <div class="detail-item">
-                    <span class="detail-label">Payment Method:</span>
-                    <span class="detail-value"><?= htmlspecialchars($order['payment_method']) ?></span>
+                <div class="detail-item" style="display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #e5e5e5;">
+                    <span class="detail-label" style="font-weight: 500;">Payment Method:</span>
+                    <span class="detail-value" style="font-weight: 600;"><?= htmlspecialchars($order['payment_method']) ?></span>
                 </div>
-                <div class="detail-item">
-                    <span class="detail-label">Current Status:</span>
+                <div class="detail-item" style="display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #e5e5e5;">
+                    <span class="detail-label" style="font-weight: 500;">Current Status:</span>
                     <span class="detail-value status-badge status-<?= htmlspecialchars($order['status']) ?>"><?= ucfirst(htmlspecialchars($order['status'])) ?></span>
                 </div>
-                <div class="detail-item">
-                    <span class="detail-label">Amount to Pay:</span>
-                    <span class="detail-value total">Rp <?= number_format($order['total_price'], 0, ',', '.') ?></span>
+                <div class="detail-item" style="display: flex; justify-content: space-between; padding: 15px 0;">
+                    <span class="detail-label" style="font-weight: 500;">Amount to Pay:</span>
+                    <span class="detail-value total" style="font-size: 22px; font-weight: 700;">Rp <?= number_format($order['total_price'], 0, ',', '.') ?></span>
                 </div>
             </div>
 
-            <form class="payment-form" method="POST">
-                <p class="dummy-info">This is a simulated payment environment</p>
+            <form class="payment-form" method="POST" style="text-align: center; margin-top: 30px;">
+                <p class="dummy-info" style="font-size: 14px; color: #888; margin-bottom: 20px;">This is a simulated payment environment</p>
                 <input type="hidden" name="order_id" value="<?= htmlspecialchars($order['id']) ?>">
-                <button type="submit" name="confirm_payment" class="confirm-payment-btn">Confirm Payment</button>
+                <button type="submit" name="confirm_payment" class="confirm-payment-btn" style="background-color: #1b1b1b; color: white; border: none; padding: 14px 35px; border-radius: 6px; cursor: pointer; font-size: 16px; width: 100%;">Confirm Payment</button>
             </form>
         </div>
     </div>
