@@ -157,6 +157,10 @@ foreach ($orders as $order) {
                                     <div class="order-total">
                                         Rp <?= number_format($orderData['info']['total_price'], 0, ',', '.') ?>
                                     </div>
+                                    
+                                    <?php if ($orderData['info']['status'] === 'pending'): ?>
+                                        <a href="?page=payment-gateway&order_id=<?= $orderId ?>" class="dashboard-btn" style="margin-top: 10px; padding: 5px 10px; font-size: 14px; text-align: center;">Pay Now</a>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             <div class="order-items">

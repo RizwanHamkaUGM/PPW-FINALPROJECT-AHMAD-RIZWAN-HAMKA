@@ -23,6 +23,7 @@ $allowed_pages = [
 
     'submit-order' => 'pages/submit-order.php',
     'submit-cart' => 'pages/submit-cart.php',
+    'payment-gateway' => 'pages/payment-gateway.php' 
 ];
 
 
