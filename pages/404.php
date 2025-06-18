@@ -10,7 +10,7 @@ if (array_key_exists($page, $allowed_pages)) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>404 - Page Not Found</title>
         <link rel="stylesheet" href="assets/css/style.css">
-        <link href="https:
+        <link rel="icon" href="assets/images/favicon.png" type="image/png">
     </head>
 
     <body>
