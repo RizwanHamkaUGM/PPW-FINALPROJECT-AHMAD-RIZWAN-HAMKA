@@ -99,7 +99,6 @@ foreach ($orders as $order) {
     }
     ?>
 
-    <!-- Dashboard Banner -->
     <div class="dashboard-banner">
         <div class="banner-title">
             <h1>Welcome, <?= htmlspecialchars($user['name']) ?>!</h1>
@@ -110,11 +109,10 @@ foreach ($orders as $order) {
         </div>
         <div class="dashboard-actions">
             <button class="dashboard-btn" onclick="openEditModal()">Edit Profile</button>
-            <a href="?page=logout" class="dashboard-btn" onclick="return confirm('Yakin ingin logout?')">Logout</a>
+            <a href="?page=logout" class="dashboard-btn btn-delete" onclick="return confirm('Yakin ingin logout?')">Logout</a>
         </div>
     </div>
 
-    <!-- Orders Section -->
     <div class="orders-section">
         <div class="orders-container">
             <!-- Alert Messages -->

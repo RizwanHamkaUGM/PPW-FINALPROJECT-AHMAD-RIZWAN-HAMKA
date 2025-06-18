@@ -87,7 +87,6 @@ try {
     <?php
     include 'components/footer.php';
     include 'components/modal.php';
-    include 'components/modal-login-alert.php';
     ?>
 
 </body>

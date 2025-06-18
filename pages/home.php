@@ -76,14 +76,16 @@ try {
                     
                     if (!empty($clothing_only_4)) {
                         foreach ($clothing_only_4 as $row) {
-                            echo '<div class="card">';
+                            $category = strtolower($row["category"] ?? 'clothing');
+                            echo '<div class="card" data-category="' . htmlspecialchars($row["type"]) . '">';
                             echo '  <div class="card-image">';
-                            echo '      <img src="' . htmlspecialchars($row["image_url"] ?? 'assets/images/default.jpg') . '" alt="' . htmlspecialchars($row["name"] ?? 'Product') . '">';
+                            echo '      <img src="' . htmlspecialchars($row["image_url"] ?? 'assets/images/default.jpg') . '" alt="' . htmlspecialchars($row["name"] ?? 'Product') . '" loading="lazy">';
                             echo '  </div>';
                             echo '  <div class="card-title">'; 
-                            echo '      <h4 class="carde-title" hidden>' . $row["name"]. '</h3>';
+                            echo '      <h2 class="carde-id" hidden>' . $row["id"]. '</h2>';
+                            echo '      <h4 class="carde-title" hidden>' . $row["name"]. '</h4>';
                             echo '      <h3 class="carde-title">' . htmlspecialchars(implode(' ', array_slice(explode(' ', $row["name"] ?? 'Unnamed Product'), 0, 2))) . '</h3>';
-                            echo '      <p>Rp ' . number_format($row["price"] ?? 0, 0, ',', '.') . '</p>';
+                            echo '      <p class="card-price">Rp ' . number_format($row["price"] ?? 0, 0, ',', '.') . '</p>';
                             echo '  </div>';
                             echo '</div>';
                         }
@@ -99,8 +101,8 @@ try {
         </div>
     </div>
 
-    <div class="Banner" style="background-color: #84a1ff; align-items: end;">
-        <img class="Banner-Image" src="assets/images/3RD.png" alt="">
+    <div class="Banner" style="height: 400px; background-color: white; color: #1b1b1b;">
+        <h1>CARRY<br>THE<br>ESSENCE.</h1>
     </div>
 
     <div class="Product-section">
@@ -116,14 +118,16 @@ try {
                     
                     if (!empty($accessory_only_4)) {
                         foreach ($accessory_only_4 as $row) {
-                            echo '<div class="card">';
+                            $category = strtolower($row["category"] ?? 'clothing');
+                            echo '<div class="card" data-category="' . htmlspecialchars($row["type"]) . '">';
                             echo '  <div class="card-image">';
-                            echo '      <img src="' . htmlspecialchars($row["image_url"] ?? 'assets/images/default.jpg') . '" alt="' . htmlspecialchars($row["name"] ?? 'Product') . '">';
+                            echo '      <img src="' . htmlspecialchars($row["image_url"] ?? 'assets/images/default.jpg') . '" alt="' . htmlspecialchars($row["name"] ?? 'Product') . '" loading="lazy">';
                             echo '  </div>';
                             echo '  <div class="card-title">'; 
+                            echo '      <h2 class="carde-id" hidden>' . $row["id"]. '</h2>';
                             echo '      <h4 class="carde-title" hidden>' . $row["name"]. '</h4>';
                             echo '      <h3 class="carde-title">' . htmlspecialchars(implode(' ', array_slice(explode(' ', $row["name"] ?? 'Unnamed Product'), 0, 2))) . '</h3>';
-                            echo '      <p>Rp ' . number_format($row["price"] ?? 0, 0, ',', '.') . '</p>';
+                            echo '      <p class="card-price">Rp ' . number_format($row["price"] ?? 0, 0, ',', '.') . '</p>';
                             echo '  </div>';
                             echo '</div>';
                         }
@@ -139,11 +143,12 @@ try {
         </div>
     </div>
 
-    <div class="Banner">
+    <div class="Banner" style="height: 600px;">
         <h1>NOT <br> JUST <br>MERCH.</h1>
     </div>
 
     <?php
+    include 'components/modal.php';
     include 'components/footer.php';
     ?>
 
