@@ -95,7 +95,7 @@ nav a {
     text-decoration: none;
 }
 .Banner .image-area{
-    background-color: #7293ff;
+    background-color: #ebeeef;
     height: 100%;
     width: 60%;
     display: flex;
@@ -460,7 +460,8 @@ footer {
 }
 
 .modal-category-tag {
-    background-color: #e0e0ff; /* Light blue accent */
+    background-color: #e0e0ff; 
+    width: fit-content;
     color: #555;
     padding: 4px 10px;
     border-radius: 15px;
